@@ -5,11 +5,15 @@
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
-# 1. ABAIKAN SELURUH FILE MARKDOWN (*.md / *.MD)
+# 1. ABAIKAN SELURUH FILE MARKDOWN (*.md / *.MD) EXCPET README.md
 # ------------------------------------------------------------------------------
 *.md
 *.MD
 *.markdown
+
+# KECUALIKAN README.md AGAR BISA TERDOKUMENTASI DI GITHUB
+!README.md
+!**/README.md
 
 # ------------------------------------------------------------------------------
 # 2. ABAIKAN FOLDER CATATAN, MATERI, & FILE DOKUMEN NARASI
