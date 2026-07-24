@@ -1,0 +1,110 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f3f4f6; /* Warna abu-abu terang */
+  margin: 0;
+  padding: 0;
+}
+
+/* Bagian Atas (Navbar) */
+.header {
+  background-color: #ffffff;
+  padding: 15px 40px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #111827;
+}
+
+.cart-info {
+  background-color: #3b82f6; /* Biru cakep */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Tempat jejeran Card */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 50px;
+  justify-content: center;
+}
+
+/* Desain Kartu (ProductCard) */
+.card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px); /* Efek melayang saat di-hover */
+}
+
+.card img {
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+  color: #1f2937;
+  text-align: center;
+}
+
+.card p {
+  margin: 0 0 20px 0;
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* Desain Tombol */
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-normal {
+  background-color: #10b981; /* Hijau */
+  color: white;
+}
+
+.btn-normal:hover {
+  background-color: #059669;
+}
+
+.btn-added {
+  background-color: #ef4444; /* Merah */
+  color: white;
+}
+
+.btn-added:hover {
+  background-color: #dc2626;
+}

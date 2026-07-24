@@ -1,0 +1,67 @@
+# ==============================================================================
+# BOOTCAMP MONOREPO GITIGNORE
+# HANYA KODE PROJECT YANG DI-PUSH KE GITHUB
+# SELURUH MATERI, CATATAN, FILE MARKDOWN, & CREDENTIALS SENSITIF DI-IGNORE
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. ABAIKAN SELURUH FILE MARKDOWN (*.md / *.MD)
+# ------------------------------------------------------------------------------
+*.md
+*.MD
+*.markdown
+
+# ------------------------------------------------------------------------------
+# 2. ABAIKAN FOLDER CATATAN, MATERI, & FILE DOKUMEN NARASI
+# ------------------------------------------------------------------------------
+materi/
+**/materi/
+Notes/
+**/Notes/
+NOTES/
+**/NOTES/
+note
+**/note
+penjelasan
+**/penjelasan
+.sixth/
+**/.sixth/
+.agents/
+**/.agents/
+
+# ------------------------------------------------------------------------------
+# 3. ABAIKAN DEPENDENCIES & PACKAGE LOCK HEAVY FILES (Standard Node.js)
+# ------------------------------------------------------------------------------
+node_modules/
+**/node_modules/
+
+# ------------------------------------------------------------------------------
+# 4. ABAIKAN ENVIRONMENT VARIABLES & SECRETS (PENTING KECUALIKAN SENSITIF DATA)
+# ------------------------------------------------------------------------------
+.env
+**/.env
+.env.*
+**/.env.*
+*.env
+
+# ------------------------------------------------------------------------------
+# 5. ABAIKAN BUILD OUTPUTS & TEMPORARY FILES
+# ------------------------------------------------------------------------------
+dist/
+**/dist/
+build/
+**/build/
+.cache/
+**/.cache/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ------------------------------------------------------------------------------
+# 6. ABAIKAN IDE & OS SYSTEM JUNK
+# ------------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
