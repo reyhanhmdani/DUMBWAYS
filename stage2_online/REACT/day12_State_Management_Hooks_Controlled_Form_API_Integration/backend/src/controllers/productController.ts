@@ -1,7 +1,8 @@
 import prisma from "../config/prisma";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { ApiError } from "../utils/apiError";
 
-export const readProducts = async (req: Request, res: Response) => {
+export const readProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { search, minPrice, sortBy, order } = req.query;
 
@@ -58,21 +59,16 @@ export const readProducts = async (req: Request, res: Response) => {
       data: products,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Gagal mengambil data produk dari server",
-    });
+    next(error);
   }
 };
 
-export const createProduct = async (req: Request, res: Response) => {
+export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, price, stock, category, userId } = req.body;
 
     if (!name || !price || !stock) {
-      return res.status(400).json({
-        status: 400,
-        message: "name, price dan stock tidak boleh kosong!",
-      });
+      throw new ApiError(400, "name, price dan stock tidak boleh kosong!");
     }
 
     // wajib konversi ke number price dan stock nya
@@ -80,10 +76,7 @@ export const createProduct = async (req: Request, res: Response) => {
     const stockNumber = parseInt(stock);
 
     if (isNaN(priceNumber) || isNaN(stockNumber)) {
-      return res.status(400).json({
-        status: 400,
-        message: "price dan stock harus berupa angka!",
-      });
+      throw new ApiError(400, "price dan stock harus berupa angka!");
     }
 
     const productImage = req.file ? `/uploads/${req.file.filename}` : null;
@@ -105,13 +98,11 @@ export const createProduct = async (req: Request, res: Response) => {
       data: newProduct,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error,
-    });
+    next(error);
   }
 };
 
-export const getProduct = async (req: Request, res: Response) => {
+export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { idProduct } = req.params;
 
@@ -125,52 +116,48 @@ export const getProduct = async (req: Request, res: Response) => {
     });
 
     if (!getProduct) {
-      return res.status(404).json({
-        message: "data nggak nemu",
-      });
+      throw new ApiError(404, "Data produk tidak ditemukan!");
     }
 
     return res.status(200).json({
       data: getProduct,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error,
-    });
+    next(error);
   }
 };
 
-export const editProduct = async (req: Request, res: Response) => {
+export const editProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { idProduct } = req.params;
     const { name, price, stock, category } = req.body;
-
-    if (!name || !price || !stock) {
-      return res.status(400).json({
-        status: 400,
-        message: "name, price dan stock tidak boleh kosong!",
-      });
-    }
-
-    const priceNumber = parseInt(price);
-    const stockNumber = parseInt(stock);
-
-    if (isNaN(priceNumber) || isNaN(stockNumber)) {
-      return res.status(400).json({
-        status: 400,
-        message: "price dan stock harus berupa angka!",
-      });
-    }
 
     const existingProduct = await prisma.product.findUnique({
       where: { id: Number(idProduct) },
     });
 
     if (!existingProduct) {
-      return res.status(404).json({
-        message: "Data produk tidak ditemukan!",
-      });
+      throw new ApiError(404, "Data produk tidak ditemukan!");
     }
+
+    const currentUserId = (req as any).user.id;
+    // cek jika bukan pemilik
+    if (existingProduct.userId !== currentUserId) {
+      throw new ApiError(403, "Tidak bisa melakukan update product milik orang lain!");
+    }
+
+    if (!name || !price || !stock) {
+      throw new ApiError(400, "name, price dan stock tidak boleh kosong!");
+    }
+
+    const priceNumber = parseInt(price);
+    const stockNumber = parseInt(stock);
+
+    if (isNaN(priceNumber) || isNaN(stockNumber)) {
+      throw new ApiError(400, "price dan stock harus berupa angka!");
+    }
+
+    const productImage = req.file ? `/uploads/${req.file.filename}` : existingProduct.productImage;
 
     const updateProduct = await prisma.product.update({
       where: {
@@ -181,6 +168,7 @@ export const editProduct = async (req: Request, res: Response) => {
         price: priceNumber,
         stock: stockNumber,
         category: category,
+        productImage,
       },
     });
 
@@ -189,16 +177,14 @@ export const editProduct = async (req: Request, res: Response) => {
       data: updateProduct,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error,
-    });
+    next(error);
   }
 };
 
-export const updateProductPartial = async (req: Request, res: Response) => {
+export const updateProductPartial = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { idProduct } = req.params;
-    const { name, price, stock, category } = req.body;
+    const { name, price, stock, category, productImage } = req.body;
 
     const existingProduct = await prisma.product.findUnique({
       where: {
@@ -207,9 +193,13 @@ export const updateProductPartial = async (req: Request, res: Response) => {
     });
 
     if (!existingProduct) {
-      return res.status(404).json({ message: "Data tidak ditemukan" });
+      throw new ApiError(404, "Data tidak ditemukan");
     }
-
+    const currentUserId = (req as any).user.id;
+    // cek jika bukan pemilik
+    if (existingProduct.userId !== currentUserId) {
+      throw new ApiError(403, "Tidak bisa melakukan update product milik orang lain!");
+    }
     // Siapkan wadah untuk data yang akan diupdate
     // Kita buat tipe datanya any dulu karena isinya bisa dinamis
     let updateData: any = {};
@@ -217,7 +207,7 @@ export const updateProductPartial = async (req: Request, res: Response) => {
     // Cek satu per satu apa saja yang dikirim oleh client
     if (name !== undefined) {
       if (name.trim() === "") {
-        return res.status(400).json({ message: "Nama tidak boleh kosong!" });
+        throw new ApiError(400, "Nama tidak boleh kosong!");
       }
       updateData.name = name;
     }
@@ -225,14 +215,20 @@ export const updateProductPartial = async (req: Request, res: Response) => {
 
     if (price) {
       const priceNumber = parseInt(price);
-      if (isNaN(priceNumber)) return res.status(400).json({ message: "Harga harus angka" });
+      if (isNaN(priceNumber)) throw new ApiError(400, "Harga harus angka");
       updateData.price = priceNumber;
     }
 
     if (stock) {
       const stockNumber = parseInt(stock);
-      if (isNaN(stockNumber)) return res.status(400).json({ message: "Stok harus angka" });
+      if (isNaN(stockNumber)) throw new ApiError(400, "Stok harus angka");
       updateData.stock = stockNumber;
+    }
+
+    if (req.file) {
+      updateData.productImage = `/uploads/${req.file.filename}`;
+    } else if (productImage) {
+      updateData.productImage = productImage;
     }
 
     const updatedProduct = await prisma.product.update({
@@ -245,11 +241,11 @@ export const updateProductPartial = async (req: Request, res: Response) => {
       data: updatedProduct,
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    next(error);
   }
 };
 
-export const deleteProduct = async (req: Request, res: Response) => {
+export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { idProduct } = req.params;
 
@@ -260,9 +256,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
     });
 
     if (!existingProduct) {
-      return res.status(404).json({
-        message: "data nggak nemu",
-      });
+      throw new ApiError(404, "Data produk tidak ditemukan!");
     }
 
     await prisma.product.delete({
@@ -276,8 +270,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
       message: `data dengan id ${idProduct} sudah terhapus`,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error,
-    });
+    next(error);
   }
 };
+

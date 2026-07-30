@@ -8,9 +8,9 @@ const router = Router();
 
 router.get("/", readProducts);
 router.get("/:idProduct", getProduct);
-router.post("/", upload.single("image"), createProduct);
-router.put("/:idProduct", editProduct);
-router.patch("/:idProduct", updateProductPartial);
+router.post("/", upload.single("productImage"), createProduct);
+router.put("/:idProduct", authMiddleware, upload.single("productImage"), editProduct);
+router.patch("/:idProduct", authMiddleware, upload.single("productImage"), updateProductPartial);
 router.delete("/:idProduct", authMiddleware, authorization("ADMIN"), deleteProduct);
 
 export default router;
