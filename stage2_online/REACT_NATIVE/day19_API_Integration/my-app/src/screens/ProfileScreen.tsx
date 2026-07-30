@@ -82,7 +82,7 @@ export default function Profile({ route, navigation }: Props) {
           activeOpacity={0.8}
           onPress={() => {
             signOut();
-            navigation.navigate("HomeTab");
+            // navigation.navigate("HomeTab");
           }}
         >
           <Text className="text-white font-bold">← LogOut</Text>
