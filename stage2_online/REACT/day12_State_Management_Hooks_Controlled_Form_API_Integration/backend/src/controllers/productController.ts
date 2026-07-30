@@ -86,11 +86,14 @@ export const createProduct = async (req: Request, res: Response) => {
       });
     }
 
+    const productImage = req.file ? `/uploads/${req.file.filename}` : null;
+
     const newProduct = await prisma.product.create({
       data: {
         name: name,
         price: priceNumber,
         stock: stockNumber,
+        productImage,
         category: category,
         userId: Number(userId),
       },

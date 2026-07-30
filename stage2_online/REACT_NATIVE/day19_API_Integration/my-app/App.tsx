@@ -1,6 +1,7 @@
+import "./global.css";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {  SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import DetailScreen from "./src/screens/DetailScreen";
@@ -73,7 +74,7 @@ export default function App() {
             component={DetailScreen}
             options={{
               title: `Detail Product`,
-              headerStyle: { backgroundColor: "#143176ff" },
+              headerStyle: { backgroundColor: "#0f172a" },
               headerTintColor: "white",
               headerTitleStyle: {
                 fontWeight: "bold",

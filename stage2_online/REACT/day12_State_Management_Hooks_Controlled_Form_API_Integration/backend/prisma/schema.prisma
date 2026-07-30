@@ -31,6 +31,7 @@ model Product {
   name String
   price Int
   stock Int
+  productImage String?
   category String?
   userId Int
   User User @relation(fields: [userId], references: [id])

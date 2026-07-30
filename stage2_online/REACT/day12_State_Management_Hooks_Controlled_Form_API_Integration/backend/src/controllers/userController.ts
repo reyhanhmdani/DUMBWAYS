@@ -44,7 +44,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ambil path gambarnya jika ada file/gambar di upload
+    // ambil path gambarnya jika ada file/gambar yang di upload
     const profilePicture = req.file ? `/uploads/${req.file.filename}` : null;
 
     const newUser = await prisma.user.create({

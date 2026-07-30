@@ -78,7 +78,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor="#0f127a" />
+        <StatusBar barStyle="light-content" backgroundColor="#347a0fff" />
 
         <View style={styles.header}>
           <View>
