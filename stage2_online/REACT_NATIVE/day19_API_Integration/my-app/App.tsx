@@ -2,14 +2,21 @@ import "./global.css";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
 import HomeScreen from "./src/screens/HomeScreen";
 import DetailScreen from "./src/screens/DetailScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import LoginScreen from "./src/screens/LoginScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { AuthContext } from "./src/context/AuthContext";
+
+import { useState, useEffect, useMemo } from "react";
+import * as SecureStore from "expo-secure-store";
+import QRScannerScreen from "./src/screens/QRScanner";
 
 export type RootStackParalist = {
+  Login: undefined;
+  QRScanner: undefined;
   MainApp: undefined;
   Detail: { product: any };
   Profile: { id: number; name: string };
@@ -63,27 +70,72 @@ function BottomTabs() {
   );
 }
 
+// AUthContext
 export default function App() {
+  const [userToken, setUserToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // buat check token
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        // ngadapetin token yang di simpan di dalam secure store
+        const token = await SecureStore.getItemAsync("userToken");
+        setUserToken(token);
+      } catch (error) {
+        console.log("Error Check token", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    checkToken();
+  }, []);
+
+  const authContext = useMemo(
+    () => ({
+      signIn: async (token: string) => {
+        await SecureStore.setItemAsync("userToken", token);
+        setUserToken(token);
+      },
+      signOut: async () => {
+        await SecureStore.deleteItemAsync("userToken");
+        setUserToken(null);
+      },
+    }),
+    [],
+  );
+
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="MainApp">
-          <Stack.Screen name="MainApp" component={BottomTabs} options={{ headerShown: false }} />
-          <Stack.Screen
-            name="Detail"
-            component={DetailScreen}
-            options={{
-              title: `Detail Product`,
-              headerStyle: { backgroundColor: "#0f172a" },
-              headerTintColor: "white",
-              headerTitleStyle: {
-                fontWeight: "bold",
-                fontSize: 20,
-              },
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <AuthContext.Provider value={authContext}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {userToken === null ? (
+              <>
+                <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="QRScanner" component={QRScannerScreen} />
+              </>
+            ) : (
+              <>
+                <Stack.Screen name="MainApp" component={BottomTabs} options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="Detail"
+                  component={DetailScreen}
+                  options={{
+                    title: `Detail Product`,
+                    headerStyle: { backgroundColor: "#0f172a" },
+                    headerTintColor: "white",
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                      fontSize: 20,
+                    },
+                  }}
+                />
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </AuthContext.Provider>
   );
 }

@@ -5,13 +5,11 @@ type UserStore = {
   setName: (name: string) => void;
   selectedProduct: any | null;
   setSelectedProduct: (product: any) => void;
-  logout: () => void;
 };
 
 export const useUserStore = create<UserStore>((set) => ({
-  name: "Raihan Hamdani",
+  name: "Raihan hamdani",
   setName: (name) => set({ name }),
   selectedProduct: null,
   setSelectedProduct: (product) => set({ selectedProduct: product }),
-  logout: () => set({ name: "Guest" }),
 }));

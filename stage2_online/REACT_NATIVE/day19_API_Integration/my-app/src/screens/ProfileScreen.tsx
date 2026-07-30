@@ -3,19 +3,22 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { RootTabParamList } from "../../App";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useUserStore } from "../store/useUserStore";
+import { AuthContext } from "../context/AuthContext";
+
+import { useContext } from "react";
 
 type Props = BottomTabScreenProps<RootTabParamList, "Profile">;
 
 export default function Profile({ route, navigation }: Props) {
-  const { name, logout } = useUserStore();
+
+  const { user, signOut } = useContext(AuthContext);
   return (
     <SafeAreaView className="flex-1 bg-slate-900 border-t border-t-slate-600">
       <View className="flex-grow p-5">
         <View className="bg-slate-800 rounded-2xl shadow-lg shadow-emerald-500 flex-row items-center p-5 mb-4 border border-slate-700">
           <View className="flex-1 ml-4">
             <Text className="text-xs text-emerald-400 font-semibold uppercase tracking-wider">User Profile</Text>
-            <Text className="text-xl font-bold text-slate-50 mt-1">{name || "Rey App"}</Text>
+            <Text className="text-xl font-bold text-slate-50 mt-1">{user?.name || "Rey App"}</Text>
           </View>
 
           <View className="w-14 h-14 rounded-full bg-emerald-500 justify-center items-center">
@@ -25,7 +28,6 @@ export default function Profile({ route, navigation }: Props) {
 
         {/* grid */}
         <View className="flex-row flex-wrap justify-between gap-y-4 mb-4">
-          {/* Card 1: Projects */}
           <View className="bg-slate-800 rounded-2xl p-4 shadow-lg shadow-emerald-500/20 w-[48%] border border-slate-700">
             <View className="flex-row justify-between items-start mb-4">
               <MaterialIcons name="code" size={24} color="#38bdf8" />
@@ -38,7 +40,6 @@ export default function Profile({ route, navigation }: Props) {
             <Text className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Total Projects</Text>
           </View>
 
-          {/* Card 2: Streak */}
           <View className="bg-slate-800 rounded-2xl p-4 shadow-lg shadow-emerald-500/20 w-[48%] border border-slate-700">
             <View className="flex-row justify-between items-start mb-4">
               <MaterialIcons name="local-fire-department" size={24} color="#f97316" />
@@ -51,7 +52,6 @@ export default function Profile({ route, navigation }: Props) {
             <Text className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Git Commits</Text>
           </View>
 
-          {/* Card 3: Bootcamp Stage */}
           <View className="bg-slate-800 rounded-2xl p-4 shadow-lg shadow-emerald-500/20 w-[48%] border border-slate-700">
             <View className="flex-row justify-between items-start mb-4">
               <MaterialIcons name="school" size={24} color="#a855f7" />
@@ -64,7 +64,6 @@ export default function Profile({ route, navigation }: Props) {
             <Text className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Bootcamp</Text>
           </View>
 
-          {/* Card 4: Hours Coded */}
           <View className="bg-slate-800 rounded-2xl p-4 shadow-lg shadow-emerald-500/20 w-[48%] border border-slate-700">
             <View className="flex-row justify-between items-start mb-4">
               <MaterialIcons name="coffee" size={24} color="#eab308" />
@@ -77,12 +76,12 @@ export default function Profile({ route, navigation }: Props) {
           </View>
         </View>
 
-        {/* Tombol Logout & Reset Param */}
+        {/* Tombol Logout */}
         <TouchableOpacity
           className="bg-red-500 py-3.5 px-10 rounded-xl items-center self-center mt-auto"
           activeOpacity={0.8}
           onPress={() => {
-            logout();
+            signOut();
             navigation.navigate("HomeTab");
           }}
         >

@@ -1,78 +1,61 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, StatusBar, Button } from "react-native";
+import { ActivityIndicator, Text, View, Image, TouchableOpacity, FlatList, StatusBar, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { useUserStore } from "../store/useUserStore";
-import { useStore } from "zustand";
-
-const DUMMY_POST = [
-  {
-    id: "1",
-    title: "Nike Air Max",
-    category: "Sepatu",
-    price: "2.500.000",
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWRpZGFzJTIwc2hvZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    id: "2",
-    title: "Adidas Ultraboost",
-    category: "Sepatu",
-    price: "3.000.000",
-    image:
-      "https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YWRpZGFzJTIwc2hvZXN8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    id: "3",
-    title: "Puma RS-X",
-    category: "Sepatu",
-    price: "1.800.000",
-    image:
-      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHVtYSUyMHNob2VzfGVufDB8fDB8fHww",
-  },
-  {
-    id: "4",
-    title: "MacBook Pro M3 Max",
-    category: "Laptop",
-    price: "Rp 35.000.000",
-    image: "https://picsum.photos/id/1/200/200",
-  },
-  {
-    id: "5",
-    title: "Keyboard mekanik",
-    category: "Accessories",
-    price: "Rp 1.500.000",
-    image: "https://picsum.photos/id/2/200/200",
-  },
-  {
-    id: "6",
-    title: "Logitech Mouse",
-    category: "Accessories",
-    price: "Rp 1.800.000",
-    image: "https://picsum.photos/id/3/200/200",
-  },
-  {
-    id: "7",
-    title: "Monitor 4K",
-    category: "Display",
-    price: "Rp 8.500.000",
-    image: "https://picsum.photos/id/4/200/200",
-  },
-];
+import { useEffect, useState } from "react";
+import * as SecureStore from "expo-secure-store";
+import api from "../config/api";
 
 export default function HomeScreen() {
   const setSelectedProduct = useUserStore((state) => state.setSelectedProduct);
-  const setName = useUserStore((state) => state.setName);
+
+  const [products, setProducts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const fetchProduct = async () => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const token = await SecureStore.getItemAsync("userToken");
+      const response = await api.get("/products", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProducts(response.data.data);
+    } catch (error: any) {
+      console.log("Fetch Error", error);
+      Alert.alert("Access gagal", error.response?.data?.message || "failed ambil data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await fetchProduct();
+    setIsRefreshing(false);
+  };
 
   const navigation = useNavigation<any>();
   // render item untuk flatlist
-  const renderProduct = ({ item }: { item: (typeof DUMMY_POST)[0] }) => (
+  const renderProduct = ({ item }: { item: any }) => (
     <View className="bg-slate-800 flex-row p-4 rounded-2xl items-center">
-      <Image source={{ uri: item.image }} className="w-20 h-20 rounded-xl" />
+      <Image
+        source={{
+          uri: `http://10.59.111.108:3000${item.productImage}`,
+        }}
+        className="w-20 h-20 rounded-xl"
+      />
 
       {/* detail produk */}
       <View className="flex-1 ml-4">
         <Text className="text-xs text-blue-400 font-bold uppercase">{item.category}</Text>
-        <Text className="text-xl font-bold text-slate-400 mt-1">{item.title}</Text>
+        <Text className="text-xl font-bold text-slate-400 mt-1">{item.name}</Text>
         <Text className="text-base text-green-500 font-semibold mt-2">{item.price}</Text>
       </View>
 
@@ -89,6 +72,14 @@ export default function HomeScreen() {
     </View>
   );
 
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center bg-slate-900">
+        <ActivityIndicator size="large" color="#2FD3FA" />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-slate-900">
       <StatusBar barStyle="light-content" className="bg-emerald-800" />
@@ -102,7 +93,7 @@ export default function HomeScreen() {
         <TouchableOpacity
           className="w-10 h-10 rounded-full bg-emerald-500 justify-center items-center"
           onPress={() => {
-            setName("Raihan Hamdani");
+            // setName("Raihan Hamdani");
             navigation.navigate("Profile");
           }}
         >
@@ -112,10 +103,12 @@ export default function HomeScreen() {
 
       <FlatList
         className="flex-1"
-        data={DUMMY_POST}
+        data={products}
         renderItem={renderProduct}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         contentContainerClassName="p-6"
+        refreshing={isRefreshing}
+        onRefresh={handleRefresh}
         ItemSeparatorComponent={() => <View className="h-6" />}
       />
     </SafeAreaView>

@@ -15,11 +15,17 @@ export default function DetailScreen({ navigation, route }: Props) {
       <View className="flex-grow justify-center p-8">
         {/* Card Utama */}
         <View className="bg-slate-800 rounded-3xl overflow-hidden mb-5">
-          <Image source={{ uri: product?.image }} className="w-full h-72" resizeMode="cover" />
+          <Image
+            source={{
+              uri: `http://10.59.111.108:3000${product.productImage}`,
+            }}
+            className="w-full h-72"
+            resizeMode="cover"
+          />
 
           <View className="p-5">
             <Text className="text-xs font-bold text-sky-500 uppercase tracking-widest">{product?.category}</Text>
-            <Text className="text-xl font-bold text-zinc-300 mt-1">{product?.title}</Text>
+            <Text className="text-xl font-bold text-zinc-300 mt-1">{product?.name}</Text>
             <Text className="text-base font-bold text-emerald-600 mt-2">{product?.price}</Text>
 
             <View className="h-px bg-slate-600 my-4" />
@@ -39,4 +45,3 @@ export default function DetailScreen({ navigation, route }: Props) {
     </SafeAreaView>
   );
 }
-
