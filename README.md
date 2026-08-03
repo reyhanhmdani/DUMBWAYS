@@ -57,7 +57,7 @@ Bootcamp/
     │   └── day14/                   # SPA Product Catalog, Auth Context & Private Routes
     │
     ├── VIBE_CODE/                    # Mobile Intro (Day 15)
-    │   └── day15/                   # React Native Intro, Expo SDK, Core Components & Flexbox
+    │   └── day15/                   # ----
     │
     └── REACT_NATIVE/                 # Mobile Native Development (Day 16 - Day 19)
         ├── day16_flalist_stylsheet/ # FlatList Virtualization, Custom StyleSheet & Safe Area
