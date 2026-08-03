@@ -1,28 +1,28 @@
 # 🚀 Dumbways Fullstack Bootcamp Journey (Monorepo)
 
-Selamat datang di repository resmi perjalanan belajar Fullstack Web Development saya di **Dumbways Indonesia**. Monorepo ini berisi seluruh kode latihan *hands-on*, tugas harian (*daily tasks*), *slicing project*, hingga integrasi *End-to-End* Backend & Frontend dari **Day 1 hingga selesai**.
+Monorepo resmi perjalanan belajar Fullstack Web & Mobile Development di **Dumbways Indonesia** (Day 1 hingga Day 19).
 
 ---
 
 ## 👨‍💻 Developer Profile
 
 - **Nama:** Raihan Hamdani (Rey)
-- **Role:** Fullstack Developer Trainee
-- **Program:** Fullstack Web Development Bootcamp — Dumbways Indonesia
+- **Role:** Fullstack Web & Mobile Developer Trainee
+- **Program:** Fullstack Development Bootcamp — Dumbways Indonesia
 
 ---
 
 ## 🛠️ Tech Stack & Tools
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![Prisma ORM](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![React.js](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![React Native](https://img.shields.io/badge/React_Native-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Expo](https://img.shields.io/badge/Expo-000000?style=for-the-badge&logo=expo&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge&logo=react&logoColor=white)
 
 ---
 
@@ -30,72 +30,52 @@ Selamat datang di repository resmi perjalanan belajar Fullstack Web Development 
 
 ```text
 Bootcamp/
-├── stage1/                       # Stage 1: Frontend Fundamentals & Web Slicing
-│   ├── day1-3/                  # Form Handling & DOM Manipulation (Buku Tamu App)
-│   ├── day2/                    # Styling & CSS Fundamentals
-│   ├── day4/                    # Flexbox Layouting & Responsive Design
-│   ├── day5/                    # Dynamic DOM Elements
-│   ├── day6/                    # Migrasi Kode JS ke TypeScript & Array Methods (.reduce, .map, .filter)
-│   └── final_stage1/            # Final Project: ReyApp (Social Media Glassmorphism + LocalStorage)
+├── stage1/                           # Stage 1: Web Fundamentals & DOM
+│   ├── day1-3/                       # Form Handling & DOM Manipulation
+│   ├── day2/                         # CSS Fundamentals & Styling
+│   ├── day4/                         # Flexbox Layouting & Responsive Design
+│   ├── day5/                         # Dynamic DOM Elements
+│   ├── day6/                         # Migrasi JS ke TypeScript & Array Methods
+│   └── final_stage1/                 # Final Project Stage 1 (ReyApp Glassmorphism)
 │
-└── stage2_online/                # Stage 2: Fullstack Engineering (Express.js + Prisma + React)
-    ├── EXPRESS_TO_PRISMA/        # Backend Development (Day 1 - Day 9)
-    │   ├── day1-2=[Express.js]/ # Express setup & HTTP Methods (GET, POST, PUT, DELETE)
-    │   ├── day3=Pengenalan_db/  # Konsep RDBMS, SQL DDL & DML
-    │   ├── day4=db_operation/   # Native DB Drivers & Parameterized Query (SQL Injection Defense)
-    │   ├── day5_express_ts/     # Express + TypeScript Separation of Concerns Architecture
-    │   ├── day6_prisma/         # Prisma ORM Setup, Schema & Client CRUD
-    │   ├── day7_prisma_query/   # Relasi Database (1-to-N), Filtering & Pagination (skip/take)
-    │   ├── day8_error_handling/ # Custom Middleware & Centralized Error Handler
-    │   └── day9_keamanan_upload/ # Password Hashing (bcrypt), JWT Token, RBAC & File Upload (Multer)
+└── stage2_online/                    # Stage 2: Fullstack Web & Mobile Development
+    ├── EXPRESS_TO_PRISMA/            # Backend API (Day 1 - Day 9)
+    │   ├── day1-2=[Express.js]/     # Express Setup, Routing & HTTP Methods
+    │   ├── day3=Pengenalan_db/      # PostgreSQL, RDBMS & SQL Fundamentals
+    │   ├── day4=db_operation/       # Native Drivers & SQL Injection Defense
+    │   ├── day5_express_ts/         # Express + TypeScript Architecture
+    │   ├── day6_prisma/             # Prisma ORM Setup & Schema Client
+    │   ├── day7_prisma_query/       # Relasi Database (1-to-N, N-to-N), Filtering & Include
+    │   ├── day8_error_handling/     # Centralized Error Middleware (ApiError) & Transactions
+    │   └── day9_keamanan_upload/    # JWT Auth, Bcrypt Hashing, RBAC & Multer File Upload
     │
-    └── REACT/                    # Frontend Development (Day 10 - Day 13+)
-        ├── day10_react_basic/   # JSX, Declarative UI & State Immutability
-        ├── day11_routing/       # Single Page Application (SPA) React Router v6 & Outlet Layout Engine
-        ├── day12_State_Forms/   # Controlled Form, Debouncing Custom Hook & Trio State Async Integration
-        └── day13/               # Context API State Management & Todo App
+    ├── REACT/                        # Frontend Web SPA (Day 10 - Day 14)
+    │   ├── day10_react_basic/       # JSX, Props & State Immutability
+    │   ├── day11_routing/           # React Router v7, SPA Routing & ShadCN UI
+    │   ├── day12_State_Forms/       # Controlled Form & Async Trio State API Fetching
+    │   ├── day13/                   # Advanced Hooks & Context API State Management
+    │   └── day14/                   # SPA Product Catalog, Auth Context & Private Routes
+    │
+    ├── VIBE_CODE/                    # Mobile Intro (Day 15)
+    │   └── day15/                   # React Native Intro, Expo SDK, Core Components & Flexbox
+    │
+    └── REACT_NATIVE/                 # Mobile Native Development (Day 16 - Day 19)
+        ├── day16_flalist_stylsheet/ # FlatList Virtualization, Custom StyleSheet & Safe Area
+        ├── day17_navigation/        # React Navigation (Native Stack, Params & Bottom Tabs)
+        ├── day18_nativewind/        # NativeWind v4 (Tailwind for RN) & Zustand Store
+        └── day19_API_Integration/   # Mobile API Integration, SecureStore, Pull-Refresh & QR Scanner
 ```
 
 ---
 
-## 🌟 Highlight Kode & Arsitektur Projek
+## 📄 Berkas Master & Showroom
 
-1. **Stage 1 Final Project — ReyApp (`stage1/final_stage1`):**
-   - Web sosial media modern berbasis HTML5, Vanilla JS, dan Tailwind CSS (efek *Glassmorphism*).
-   - Fitur unggulan: Post Feed terbaru di posisi teratas (`unshift()`), *state persistence* via `localStorage`.
-
-2. **Backend Express.js + Prisma ORM (`stage2_online/EXPRESS_TO_PRISMA`):**
-   - Menggunakan arsitektur *Separation of Concerns* (Routes, Controllers, Middlewares, Services).
-   - Keamanan API: Password Hashing via `bcrypt`, Otentikasi Stateless dengan **JWT Token**, Otorisasi **RBAC**, serta *Sanitization* upload file gambar via `Multer`.
-
-3. **Frontend React.js SPA (`stage2_online/REACT`):**
-   - Arsitektur *Lifting State Up* & `<Outlet context />` React Router v6.
-   - Controlled Form (*Single Source of Truth*), Custom Hook `useDebounce` untuk pencarian ramah server, dan penanganan async API menggunakan **Trio State** (`data`, `isLoading`, `error`).
-
----
-
-## 💻 Cara Menjalankan Projek Lokal
-
-### Run Frontend React (Vite):
-```bash
-cd stage2_online/REACT/day12_State_Management_Hooks_Controlled_Form_API_Integration/frontend
-npm install
-npm run dev
-```
-
-### Run Backend Express + Prisma:
-```bash
-cd stage2_online/REACT/day12_State_Management_Hooks_Controlled_Form_API_Integration/backend
-npm install
-npx prisma migrate dev
-npm run dev
-```
-
----
-
-## 📝 Catatan Latihan
-
-Setiap folder `day` mewakili perkembangan tingkat lanjut dalam memahami pengembangan perangkat lunak modern. Kode ditulis dengan standar *Clean Code*, *Type Safety*, dan *Best Practices* yang siap dipakai di tingkat industri (*production-ready*).
+- [RANGKUMAN_BOOTCAMP_MASTER.md](file:///c:/Coding/Bootcamp/RANGKUMAN_BOOTCAMP_MASTER.md) — Master Dokumentasi Rangkuman Kurikulum Day 1 - Day 19.
+- [PANDUAN_LIVE_CODE_DEVSTASH.md](file:///c:/Coding/Bootcamp/PANDUAN_LIVE_CODE_DEVSTASH.md) — Blueprint Master Ujian Live Code DevStash 6 Jam.
+- [ATURAN_PEMBUATAN_MATERI.md](file:///c:/Coding/Bootcamp/ATURAN_PEMBUATAN_MATERI.md) — Standard Operating Procedure (SOP) 6-Section Formula.
+- [UI_KIT_SHOWROOM_TAILWIND.html](file:///c:/Coding/Bootcamp/UI_KIT_SHOWROOM_TAILWIND.html) — Showroom Interactive Components (Tailwind v4).
+- [UI_KIT_SHOWROOM_REACT_NATIVE.jsx](file:///c:/Coding/Bootcamp/UI_KIT_SHOWROOM_REACT_NATIVE.jsx) — Showroom React Native Core Components.
+- [UI_KIT_SHOWROOM_NATIVEWIND.jsx](file:///c:/Coding/Bootcamp/UI_KIT_SHOWROOM_NATIVEWIND.jsx) — Showroom NativeWind v4 Components.
 
 ---
 *Developed with 💚 by Raihan Hamdani (Rey) @ Dumbways Bootcamp.*
