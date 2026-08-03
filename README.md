@@ -56,7 +56,7 @@ Bootcamp/
     │   ├── day13/                   # Advanced Hooks & Context API State Management
     │   └── day14/                   # SPA Product Catalog, Auth Context & Private Routes
     │
-    ├── VIBE_CODE/                    # Mobile Intro (Day 15)
+    ├── VIBE_CODE/                    # ----
     │   └── day15/                   # ----
     │
     └── REACT_NATIVE/                 # Mobile Native Development (Day 16 - Day 19)
@@ -78,4 +78,5 @@ Bootcamp/
 - [UI_KIT_SHOWROOM_NATIVEWIND.jsx](file:///c:/Coding/Bootcamp/UI_KIT_SHOWROOM_NATIVEWIND.jsx) — Showroom NativeWind v4 Components.
 
 ---
-*Developed with 💚 by Raihan Hamdani (Rey) @ Dumbways Bootcamp.*
+
+_Developed with 💚 by Raihan Hamdani (Rey) @ Dumbways Bootcamp._
