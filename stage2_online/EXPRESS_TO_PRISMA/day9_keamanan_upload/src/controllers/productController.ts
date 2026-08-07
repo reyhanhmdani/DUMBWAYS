@@ -51,7 +51,7 @@ export const readProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const createProduct = async (req: Request, res: Response) => {
+export const =createProduct = async (req: Request, res: Response) => {
   try {
     const { name, price, stock, category, userId } = req.body;
 
@@ -74,7 +74,7 @@ export const createProduct = async (req: Request, res: Response) => {
     }
 
     const newProduct = await prisma.product.create({
-      data: {
+        data: {
         name: name,
         price: priceNumber,
         stock: stockNumber,
